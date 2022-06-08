@@ -11,6 +11,8 @@ tileplot.R : generalized tileplot method for cell freqs, average gene expression
 
 generalized_nmf.R: generalized function for computing NMF decomp on a given Seurat object. Used for (Fig. 5)
 
+cellchat.R : script for running cellchat from Seurat objects and graphing utilities (Fig. S5D and S5E)
+
 nmf_downstream_analysis.R: graphing utilities for visualizing average factor expression over space time and gene weight contributions for computed factors (Fig. 5A, 5B, 5E-5G, S5A,B,C)
 
 correlation_matrices.circles.R : graphing utilities for generating correlograms and radial factor level movie (Movie S5) (Fig. 5C, S5F-G, S5H)
