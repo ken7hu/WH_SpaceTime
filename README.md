@@ -7,7 +7,7 @@ cytof_to_seurat.R : conversion of cytof data in tabular format to a Seurat objec
 
 phemd_cytof.R : running phemd on the converted cytof Seurat object (Fig. 1E)
 
-phemd_scrna_seq.R : phemd directly on scRNA-Seq Seurat object (Fig. 1J)
+phemd_scrna_seq.R : phemd directly on scRNA-Seq Seurat object (Fig. 2J)
 
 tileplot.R : generalized tileplot method for cell freqs, average gene expression within a population and average factor level used for (Fig. 2H,2I, 3C, 4C, 5A, 5B)
 
