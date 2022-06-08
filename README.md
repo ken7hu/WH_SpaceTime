@@ -17,4 +17,6 @@ nmf_downstream_analysis.R: graphing utilities for visualizing average factor exp
 
 correlation_matrices.circles.R : graphing utilities for generating correlograms and radial factor level movie (Movie S5) (Fig. 5C, S5F-G, S5H)
 
+nmf_backend_tumor_to_wh.R : script for comparing factors between wound healing and tumor contextx (Fig. 6 and S6)
+
 imaris_analysis.R :scrips for statistical analysis and plotting of imaris output. Used for (Fig. 7 and S7)
