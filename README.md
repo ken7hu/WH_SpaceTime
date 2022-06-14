@@ -9,6 +9,8 @@ phemd_scrna_seq.R : phemd directly on scRNA-Seq Seurat object (Fig. 2J)
 
 tileplot.R : generalized tileplot method for cell freqs, average gene expression within a population and average factor level used for (Fig. 2H,2I, 3C, 4C, 5A, 5B)
 
+monocle_analysis_mono_mac : analysis script for subsetting monomac mhcii low and hi populations for monocle analysis. Includes plotting of gene expression by pseudotime and trajectory superimposed on the UMAP dimensional reduction (Fig. 2D-G)
+
 generalized_nmf.R: generalized function for computing NMF decomp on a given Seurat object. Used for (Fig. 5)
 
 cellchat.R : script for running cellchat from Seurat objects and graphing utilities (Fig. S5D and S5E)
