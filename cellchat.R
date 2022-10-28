@@ -10,10 +10,10 @@ all.subset = subset(cd45.full,idents = cells.desired)
 #here we go...
 test_list = SplitObject(cd45.full,split.by = 'Day')
 #1 is d01
-#2 is d14
-#3 is d07
-#4 is d00
-#5 is d03
+#2 is d07
+#3 is d00
+#4 is d03
+#5 is d14
 DB = CellChatDB.mouse
 
 cellchat_01 = createCellChat(object = test_list[[1]],group.by = 'ident',assay = 'RNA')
@@ -51,14 +51,12 @@ cellchat_03 <- computeCommunProbPathway(cellchat_03)
 cellchat_03 <- aggregateNet(cellchat_03)
 cellchat_03 <- netAnalysis_computeCentrality(cellchat_03,slot.name = "netP")
 ########d14
-#going to remove the d14 2mm samples
-cellchat_14 = createCellChat(object = temp_14,group.by = 'ident',assay = 'RNA')
+cellchat_14 = createCellChat(object = test_list[[5]],group.by = 'ident',assay = 'RNA')
 cellchat_14@DB <- DB
 cellchat_14 <- subsetData(cellchat_14)
 future::plan("multiprocess",workers=6)
 cellchat_14 <- identifyOverExpressedGenes(cellchat_14)
 cellchat_14 <- identifyOverExpressedInteractions(cellchat_14)
-beepr::beep(2)
 cellchat_14<-computeCommunProb(cellchat_14,type = "triMean",raw.use = TRUE,population.size = TRUE)
 cellchat_14 <- computeCommunProbPathway(cellchat_14)
 cellchat_14 <- aggregateNet(cellchat_14)
@@ -75,20 +73,18 @@ cellchat_00<-computeCommunProb(cellchat_00,type = "triMean",raw.use = TRUE,popul
 cellchat_00 <- computeCommunProbPathway(cellchat_00)
 cellchat_00 <- aggregateNet(cellchat_00)
 cellchat_00 <- netAnalysis_computeCentrality(cellchat_00,slot.name = "netP")
-#group.new = levels(cellchat_03@idents)
-#cellchat_00 <- liftCellChat(cellchat_00, group.new)
+
 #######################
 object.list <- list(D01 = cellchat_01,D03 = cellchat_03,D07 = cellchat_07,D14 = cellchat_14,D00 = cellchat_00)
 saveRDS(object.list,file = "E:/Krummel Lab/SC_Experiments/20201130_WH011/WH_REDO/cellchat/mac_and_fibro_only/20210909_mac_fibro_cellchatlist_reannotated.rds")
 #saved this under 20210531cellchatobjectlist
-cellchat_beeg <- mergeCellChat(object.list, add.names = names(object.list))
-#saved this same place 20210531_cellchat_beeg
-netVisual_heatmap(cellchat_beeg, comparison = c(1,4) )
-netVisual_heatmap(cellchat_beeg,measure = "weight",comparison = c(1,5))
+cellchat_big <- mergeCellChat(object.list, add.names = names(object.list))
+netVisual_heatmap(cellchat_big, comparison = c(1,4) )
+netVisual_heatmap(cellchat_big,measure = "weight",comparison = c(1,5))
 ##################
 #stacked barchart## (Supplementary Figure 5D)
 ##################
-df2<-rankNet(cellchat_beeg, mode = "comparison",stacked = T,do.stat=FALSE,comparison = c(1,2,3,4,5),return.data = TRUE)
+df2<-rankNet(cellchat_big, mode = "comparison",stacked = T,do.stat=FALSE,comparison = c(1,2,3,4,5),return.data = TRUE)
 temp2 = df2$signaling.contribution
 names.list = unique(temp2$name)
 weight.avg = c()
