@@ -3,7 +3,7 @@ custom code for analysis of data in Space-time Mapping Identifies Concerted Mult
 Each R script is reponsible for analysis and visualization of a subset of figure panels
 ######################################################################################
 
-cytof_to_seurat.R : conversion of cytof data in tabular format to a Seurat object followed by running phemd on the converted cytof Seurat object  (Fig. 1E)
+cytof_to_seurat_phemd.R : conversion of cytof data in tabular format to a Seurat object followed by running phemd on the converted cytof Seurat object  (Fig. 1E)
 
 phemd_scrna_seq.R : phemd directly on scRNA-Seq Seurat object (Fig. 2J)
 
