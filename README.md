@@ -2,6 +2,7 @@
 custom code for analysis of data in Space-time Mapping Identifies Concerted Multicellular Patterns and Gene Programs in Healing Wounds and their Conservation in Cancers.
 Each R script is reponsible for analysis and visualization of a subset of figure panels
 ######################################################################################
+Merging_Cleaning_CD45pos.R : Merging of 5 libraries, processing and cleaning and subsetting of CD45 pos for subsequent drill down and reclustering to arrive at final CD45pos object in Figure 1
 
 cytof_to_seurat_phemd.R : conversion of cytof data in tabular format to a Seurat object followed by running phemd on the converted cytof Seurat object  (Fig. 1E)
 
