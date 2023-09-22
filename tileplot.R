@@ -1,5 +1,6 @@
 #TILEPLOTTING
 ####TILEPLOT for metadata#####
+#Note most of these functions were designed to work with Seurat v3 which handles the output of AverageExpression differently from v4
 TilePlot_meta <- function(obj, feature){
   require(plotly)
   if (feature %in% colnames(obj@meta.data)){
@@ -26,6 +27,7 @@ TilePlot_meta <- function(obj, feature){
 }
 #################
 #THIS FUNCTION PLOTS TILES FOR A GENE
+#Note this function is designed to work with Seurat v3
 TilePlot_gene <- function(obj, feature,assay,slot,scale.to.uw){
   ref.data = GetAssayData(obj,assay=assay,slot = "counts")
   if (feature %in% rownames(ref.data)){
@@ -59,6 +61,44 @@ TilePlot_gene <- function(obj, feature,assay,slot,scale.to.uw){
   }
   return(g)
 }
+
+#################
+#THIS FUNCTION PLOTS TILES FOR A GENE
+#Note this code is designed to work with Seurat v4
+TilePlot_gene <- function(obj, feature,assay,slot,scale.to.uw){
+  ref.data = GetAssayData(obj,assay=assay,slot = "counts")
+  if (feature %in% rownames(ref.data)){
+    ids = (table(obj$PunchID))
+    obj$Punch_ID <- factor(obj$PunchID, levels = names(ids))
+    Idents(obj)<-obj$Punch_ID
+    feature.averages = AverageExpression(obj,assays = assay,slot = slot,features = feature,verbose = 'FALSE')
+    #feature.averages = aggregate(obj[[feature]], list(obj$Punch_ID), mean)
+    feature.averages = as.data.frame(t(feature.averages[[1]]))
+    feature.averages$Day = sub("\\_.*", "", row.names(feature.averages))
+    feature.averages$Space = sub(".*\\_","",row.names(feature.averages))
+    uw_temp = feature.averages$V1[feature.averages$Day=='UW']
+    df = subset(feature.averages,subset = Day != 'UW',invert=TRUE)
+    if(scale.to.uw){
+      df$diff = df$V1-uw_temp
+    }
+    else{
+      df$diff = df$V1
+    }
+    df$val = df$V1
+    g <- ggplot(df, aes(x = Day, y=Space)) +
+      geom_tile(aes(fill = diff),color='black') +
+      geom_text(aes(label = round(val, 1)),size=6)+
+      scale_fill_gradient2(low = 'blue',mid = 'white',high = 'red',midpoint = 0,na.value = 'grey')+theme_void()+
+      labs(title = paste('UW :',as.character(round(uw_temp,1)),sep = ' '))+coord_fixed()+
+      theme(axis.text = element_text(size=12),axis.title = element_text(size=12),axis.title.y = element_text(size=12,angle = 90),legend.title = element_blank(),
+            legend.text = element_text(size=12),title = element_text(size = 16))
+  }
+  else{
+    print("METADATA IS  MISSING")
+  }
+  return(g)
+}
+#########################
 
 TilePlot_gene_diff <- function(obj, feature,feature2,assay,slot,scale.to.uw){
   ref.data = GetAssayData(obj,assay=assay,slot = "counts")
